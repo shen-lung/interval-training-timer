@@ -7,13 +7,14 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './src/reducers';
 
 import HomeScreen from './src/components/HomeScreen';
+import ActionScreen from './src/components/ActionScreen';
 
 export default class App extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            showHome: false,
+            showHome: true,
         }
     }
     componentDidMount() {
