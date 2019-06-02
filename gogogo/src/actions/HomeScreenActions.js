@@ -9,6 +9,99 @@ export const SEGUNDOS_COOL_DOWN_CHANGED = 'SEGUNDOS_COOL_DOWN_CHANGED';
 export const MINUTES_CYCLES_CHANGED = 'MINUTES_CYCLES_CHANGED';
 export const SEGUNDOS_CYCLES_CHANGED = 'SEGUNDOS_CYCLES_CHANGED';
 
+export const ADD_SEGUNDOS_PREPARE_CHANGED = 'ADD_SEGUNDOS_PREPARE_CHANGED';
+export const SUBTRACT_SEGUNDOS_PREPARE_CHANGED = 'SUBTRACT_SEGUNDOS_PREPARE_CHANGED';
+export const ADD_SEGUNDOS_WORK_CHANGED = 'ADD_SEGUNDOS_WORK_CHANGED';
+export const SUBTRACT_SEGUNDOS_WORK_CHANGED = 'SUBTRACT_SEGUNDOS_WORK_CHANGED';
+export const ADD_SEGUNDOS_RELAX_CHANGED = 'ADD_SEGUNDOS_RELAX_CHANGED';
+export const SUBTRACT_SEGUNDOS_RELAX_CHANGED = 'SUBTRACT_SEGUNDOS_RELAX_CHANGED';
+export const ADD_SEGUNDOS_COOL_DOWN_CHANGED = 'ADD_SEGUNDOS_COOL_DOWN_CHANGED';
+export const SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED = 'SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED';
+export const ADD_SEGUNDOS_CYCLES_CHANGED = 'ADD_SEGUNDOS_CYCLES_CHANGED';
+export const SUBTRACT_SEGUNDOS_CYCLES_CHANGED = 'SUBTRACT_SEGUNDOS_CYCLES_CHANGED';
+
+export const ON_BLUR_SEGUNDOS_PREPARE_CHANGED = 'ON_BLUR_SEGUNDOS_PREPARE_CHANGED';
+export const ON_BLUR_SEGUNDOS_WORK_CHANGED = 'ON_BLUR_SEGUNDOS_WORK_CHANGED';
+export const ON_BLUR_SEGUNDOS_RELAX_CHANGED = 'ON_BLUR_SEGUNDOS_RELAX_CHANGED';
+export const ON_BLUR_SEGUNDOS_COOL_DOWN_CHANGED = 'ON_BLUR_SEGUNDOS_COOL_DOWN_CHANGED';
+export const ON_BLUR_SEGUNDOS_CYCLES_CHANGED = 'ON_BLUR_SEGUNDOS_CYCLES_CHANGED';
+
+export const ON_BLUR_MINUTES_PREPARE_CHANGED = 'ON_BLUR_MINUTES_PREPARE_CHANGED';
+export const ON_BLUR_MINUTES_WORK_CHANGED = 'ON_BLUR_MINUTES_WORK_CHANGED';
+export const ON_BLUR_MINUTES_RELAX_CHANGED = 'ON_BLUR_MINUTES_RELAX_CHANGED';
+export const ON_BLUR_MINUTES_COOL_DOWN_CHANGED = 'ON_BLUR_MINUTES_COOL_DOWN_CHANGED';
+export const ON_BLUR_MINUTES_CYCLES_CHANGED = 'ON_BLUR_MINUTES_CYCLES_CHANGED';
+
+export const onBlurSegundosPrepare = (segundos) => {
+    return {
+        type: ON_BLUR_SEGUNDOS_PREPARE_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurSegundosWork = (segundos) => {
+    return {
+        type: ON_BLUR_SEGUNDOS_WORK_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurSegundosRelax = (segundos) => {
+    return {
+        type: ON_BLUR_SEGUNDOS_RELAX_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurSegundosCoolDown = (segundos) => {
+    return {
+        type: ON_BLUR_SEGUNDOS_COOL_DOWN_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurSegundosCycles = (segundos) => {
+    return {
+        type: ON_BLUR_SEGUNDOS_CYCLES_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurMinutesPrepare = (segundos) => {
+    return {
+        type: ON_BLUR_MINUTES_PREPARE_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurMinutesWork = (segundos) => {
+    return {
+        type: ON_BLUR_MINUTES_WORK_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurMinutesRelax = (segundos) => {
+    return {
+        type: ON_BLUR_MINUTES_RELAX_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurMinutesCoolDown = (segundos) => {
+    return {
+        type: ON_BLUR_MINUTES_COOL_DOWN_CHANGED,
+        payload: segundos
+    };
+};
+
+export const onBlurMinutesCycles = (segundos) => {
+    return {
+        type: ON_BLUR_MINUTES_CYCLES_CHANGED,
+        payload: segundos
+    };
+};
+
 export const minutesPrepareChanged = (minutes) => {
     return {
         type: MINUTES_PREPARE_CHANGED,
@@ -78,17 +171,6 @@ export const segundosCyclesChanged = (segundos) => {
         payload: segundos
     };
 };
-
-export const ADD_SEGUNDOS_PREPARE_CHANGED = 'ADD_SEGUNDOS_PREPARE_CHANGED';
-export const SUBTRACT_SEGUNDOS_PREPARE_CHANGED = 'SUBTRACT_SEGUNDOS_PREPARE_CHANGED';
-export const ADD_SEGUNDOS_WORK_CHANGED = 'ADD_SEGUNDOS_WORK_CHANGED';
-export const SUBTRACT_SEGUNDOS_WORK_CHANGED = 'SUBTRACT_SEGUNDOS_WORK_CHANGED';
-export const ADD_SEGUNDOS_RELAX_CHANGED = 'ADD_SEGUNDOS_RELAX_CHANGED';
-export const SUBTRACT_SEGUNDOS_RELAX_CHANGED = 'SUBTRACT_SEGUNDOS_RELAX_CHANGED';
-export const ADD_SEGUNDOS_COOL_DOWN_CHANGED = 'ADD_SEGUNDOS_COOL_DOWN_CHANGED';
-export const SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED = 'SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED';
-export const ADD_SEGUNDOS_CYCLES_CHANGED = 'ADD_SEGUNDOS_CYCLES_CHANGED';
-export const SUBTRACT_SEGUNDOS_CYCLES_CHANGED = 'SUBTRACT_SEGUNDOS_CYCLES_CHANGED';
 
 export const addSegundosPrepareChanged = (segundos) => {
     return {

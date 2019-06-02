@@ -34,11 +34,57 @@ import {
     subtractSegundosCoolDownChanged,
     addSegundosCyclesChanged,
     subtractSegundosCyclesChanged,
+    onBlurSegundosPrepare,
+    onBlurSegundosWork,
+    onBlurSegundosRelax,
+    onBlurSegundosCoolDown,
+    onBlurSegundosCycles,
+    onBlurMinutesPrepare,
+    onBlurMinutesWork,
+    onBlurMinutesRelax,
+    onBlurMinutesCoolDown,
+    onBlurMinutesCycles,
 } from '../actions';
 
 class HomeScreen extends PureComponent {
-    onPress = () => {
-        alert('Hola');
+    onBlurMinutesPrepareChanged(minutes) {
+        this.props.onBlurMinutesPrepare(minutes);
+    }
+    
+    onBlurMinutesWorkChanged(minutes) {
+        this.props.onBlurMinutesWork(minutes);
+    }
+    
+    onBlurMinutesRelaxChanged(minutes) {
+        this.props.onBlurMinutesRelax(minutes);
+    }
+    
+    onBlurMinutesCoolDownChanged(minutes) {
+        this.props.onBlurMinutesCoolDown(minutes);
+    }
+    
+    onBlurMinutesCyclesChanged(minutes) {
+        this.props.onBlurMinutesCycles(minutes);
+    }
+    
+    onBlurSegundosPrepareChanged(segundos) {
+        this.props.onBlurSegundosPrepare(segundos);
+    }
+    
+    onBlurSegundosWorkChanged(segundos) {
+        this.props.onBlurSegundosWork(segundos);
+    }
+    
+    onBlurSegundosRelaxChanged(segundos) {
+        this.props.onBlurSegundosRelax(segundos);
+    }
+    
+    onBlurSegundosCoolDownChanged(segundos) {
+        this.props.onBlurSegundosCoolDown(segundos);
+    }
+    
+    onBlurSegundosCyclesChanged(segundos) {
+        this.props.onBlurSegundosCycles(segundos);
     }
 
     onMinutesPrepareChanged(minutes) {
@@ -80,7 +126,7 @@ class HomeScreen extends PureComponent {
     onSegundosCyclesChanged(segundos) {
         this.props.segundosCyclesChanged(segundos);
     }
-    // =====================================================
+
     onAddSegundosPrepareChanged() {
         this.props.addSegundosPrepareChanged();
     }
@@ -149,6 +195,8 @@ class HomeScreen extends PureComponent {
                         handleSegundosPrepareChanged={this.onSegundosPrepareChanged.bind(this)}
                         handleAddSegundosPrepareChanged={this.onAddSegundosPrepareChanged.bind(this)}
                         handleSubtractSegundosPrepareChanged={this.onSubtractSegundosPrepareChanged.bind(this)}
+                        handleOnBlurSegundosChanged={this.onBlurSegundosPrepareChanged.bind(this)}
+                        handleOnBlurMinutesChanged={this.onBlurMinutesPrepareChanged.bind(this)}
                     />
                     <ModeSection 
                         timeColor={workColorCode}
@@ -159,6 +207,8 @@ class HomeScreen extends PureComponent {
                         handleSegundosPrepareChanged={this.onSegundosWorkChanged.bind(this)}
                         handleAddSegundosPrepareChanged={this.onAddSegundosWorkChanged.bind(this)}
                         handleSubtractSegundosPrepareChanged={this.onSubtractSegundosWorkChanged.bind(this)}
+                        handleOnBlurSegundosChanged={this.onBlurSegundosWorkChanged.bind(this)}
+                        handleOnBlurMinutesChanged={this.onBlurMinutesWorkChanged.bind(this)}
                     />
                     <ModeSection 
                         timeColor={relaxColorCode}
@@ -169,6 +219,8 @@ class HomeScreen extends PureComponent {
                         handleSegundosPrepareChanged={this.onSegundosRelaxChanged.bind(this)}
                         handleAddSegundosPrepareChanged={this.onAddSegundosRelaxChanged.bind(this)}
                         handleSubtractSegundosPrepareChanged={this.onSubtractSegundosRelaxChanged.bind(this)}
+                        handleOnBlurSegundosChanged={this.onBlurSegundosRelaxChanged.bind(this)}
+                        handleOnBlurMinutesChanged={this.onBlurMinutesRelaxChanged.bind(this)}
                     />
                     <ModeSection 
                         timeColor={coolDownColorCode}
@@ -179,6 +231,8 @@ class HomeScreen extends PureComponent {
                         handleSegundosPrepareChanged={this.onSegundosCoolDownChanged.bind(this)}
                         handleAddSegundosPrepareChanged={this.onAddSegundosCoolDownChanged.bind(this)}
                         handleSubtractSegundosPrepareChanged={this.onSubtractSegundosCoolDownChanged.bind(this)}
+                        handleOnBlurSegundosChanged={this.onBlurSegundosCoolDownChanged.bind(this)}
+                        handleOnBlurMinutesChanged={this.onBlurMinutesCoolDownChanged.bind(this)}
                     />
                     <ModeSection 
                         timeColor={cycleColorCode}
@@ -189,6 +243,8 @@ class HomeScreen extends PureComponent {
                         handleSegundosPrepareChanged={this.onSegundosCyclesChanged.bind(this)}
                         handleAddSegundosPrepareChanged={this.onAddSegundosCyclesChanged.bind(this)}
                         handleSubtractSegundosPrepareChanged={this.onSubtractSegundosCyclesChanged.bind(this)}
+                        handleOnBlurSegundosChanged={this.onBlurSegundosCyclesChanged.bind(this)}
+                        handleOnBlurMinutesChanged={this.onBlurMinutesCyclesChanged.bind(this)}
                     />
                     <View style={styles.total}>
                         <SimpleModeSection
@@ -266,6 +322,16 @@ export default connect(
         subtractSegundosCoolDownChanged,
         addSegundosCyclesChanged,
         subtractSegundosCyclesChanged,
+        onBlurSegundosPrepare,
+        onBlurSegundosWork,
+        onBlurSegundosRelax,
+        onBlurSegundosCoolDown,
+        onBlurSegundosCycles,
+        onBlurMinutesPrepare,
+        onBlurMinutesWork,
+        onBlurMinutesRelax,
+        onBlurMinutesCoolDown,
+        onBlurMinutesCycles,
     }
 )(HomeScreen);
 

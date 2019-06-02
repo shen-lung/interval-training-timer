@@ -16,6 +16,8 @@ export default class ModeSection extends PureComponent {
             handleSegundosPrepareChanged,
             handleAddSegundosPrepareChanged,
             handleSubtractSegundosPrepareChanged,
+            handleOnBlurSegundosChanged,
+            handleOnBlurMinutesChanged,
         } = this.props;
         const titleTextColorCode = titleColorCode;
         const titleColorCodeNumber = typeof titleColor !== 'undefined' ? titleColor : titleTextColorCode;
@@ -33,6 +35,7 @@ export default class ModeSection extends PureComponent {
                                     value={minutes}
                                     maxLength={2}
                                     onChangeText={handleMinutesPrepareChanged}
+                                    onBlur={handleOnBlurMinutesChanged}
                                 />
                                 <Text style={[styles.textDevider, {color: timeColor}]}>:</Text>
                                 <TextInput
@@ -41,7 +44,7 @@ export default class ModeSection extends PureComponent {
                                     value={segundos}
                                     maxLength={2}
                                     onChangeText={handleSegundosPrepareChanged}
-                                    onBlur={handleAddSegundosPrepareChanged}
+                                    onBlur={handleOnBlurSegundosChanged}
                                 />
                             </View>
                         </View>

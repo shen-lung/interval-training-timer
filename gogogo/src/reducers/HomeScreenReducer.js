@@ -19,6 +19,16 @@ import {
     SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED,
     ADD_SEGUNDOS_CYCLES_CHANGED,
     SUBTRACT_SEGUNDOS_CYCLES_CHANGED,
+    ON_BLUR_SEGUNDOS_PREPARE_CHANGED,
+    ON_BLUR_SEGUNDOS_WORK_CHANGED,
+    ON_BLUR_SEGUNDOS_RELAX_CHANGED,
+    ON_BLUR_SEGUNDOS_COOL_DOWN_CHANGED,
+    ON_BLUR_SEGUNDOS_CYCLES_CHANGED,
+    ON_BLUR_MINUTES_PREPARE_CHANGED,
+    ON_BLUR_MINUTES_WORK_CHANGED,
+    ON_BLUR_MINUTES_RELAX_CHANGED,
+    ON_BLUR_MINUTES_COOL_DOWN_CHANGED,
+    ON_BLUR_MINUTES_CYCLES_CHANGED,
 } from '../actions/HomeScreenActions';
 
 const INITIAL_STATE = {
@@ -46,77 +56,109 @@ const getAddSegundos = (stateSegundos, stateMinutes, totalSegundos, totalMinutes
     if (totalSeg < 10) {
         totalSeg = `0${totalSeg}`;
     } else if (totalSeg > 59) {
-        totalMin = (Number(totalMin) + 1).toString();
+        totalMin = `0${(Number(totalMin) + 1)}`;
         totalSeg = '00';
     }
     if (segundosStateValue < 10) {
         segundos = `0${segundosStateValue.toString()}`;
     } else if (segundosStateValue > 59) {
-        minutes = (Number(minutes) + 1).toString();
+        minutes = `0${(Number(minutes) + 1)}`;
         segundos = '00';
     }
 
     return {segundos, minutes, totalSeg, totalMin};
 }
 
-const getSubtractSegundos = (stateSegundos, totalSegundos, stateMinutes) => {
+const getTwoDigitTimeNumber = (time) => {
+    if (time < 10) {
+        time = '0' + time.toString();
+    } else {
+        time = time.toString();
+    }
+
+    return time;
+} 
+
+const getSubtractSegundos = (stateSegundos, totalSegundos, stateMinutes, totalMinutes) => {
     const segundosNumberStateValue = Number(stateSegundos);
     let minutesNumberStateValue = Number(stateMinutes);
-    let minutes = null;
+    const isAllZero = segundosNumberStateValue === 0 && minutesNumberStateValue === 0;
     let segundosStateValue = segundosNumberStateValue - 1;
-    let totalSeg = Number(totalSegundos) - 1;
+    let totalSeg = Number(totalSegundos);
+    let totalMin = Number(totalMinutes);
+    let tMinutes = totalMin;
+    let tSegundos = totalSeg;
     let segundos = segundosStateValue.toString();
+    let minutes;
 
     if (segundosNumberStateValue === 0 && minutesNumberStateValue > 0) {
         minutes = (minutesNumberStateValue - 1);
         segundos = 59;
-    } else if (segundosNumberStateValue === 0 && minutesNumberStateValue === 0) {
+    } else if (isAllZero) {
         segundos = 0;
         minutes = 0;
     } else {
         minutes = minutesNumberStateValue;
     }
 
-    if (minutes < 10) {
-        minutes = '0' + minutes.toString();
+    if (totalSeg === 0 && totalMin > 0) {
+        tMinutes = (totalMin - 1);
+        tSegundos = 59;
+    } else if (totalSeg === 0 && totalMin === 0) {
+        tSegundos = 0;
+        tMinutes = 0;
+    } else if (isAllZero) {
+        tSegundos = totalSeg;
     } else {
-        minutes = minutes.toString();
-    }
-    
-    if (segundos < 10) {
-        segundos = '0' + segundos.toString();
-    } else {
-        segundos = segundos.toString();
-    }
-    
-    if (totalSeg <= 0) {
-        totalSeg = '00';
-    } else if (totalSeg < 10) {
-        totalSeg = '0' + totalSeg.toString();
+        tSegundos = totalSeg - 1;
     }
 
-    return {segundos, totalSeg, minutes};
+    tMinutes = getTwoDigitTimeNumber(tMinutes);
+    tSegundos = getTwoDigitTimeNumber(tSegundos);
+
+    minutes = getTwoDigitTimeNumber(minutes);
+    segundos = getTwoDigitTimeNumber(segundos);
+
+    return {segundos, minutes, tSegundos, tMinutes};
 }
 
-const getTotalSegundosTime = (totalSegundos, segundos) => {
-    return (Number(totalSegundos) + Number(segundos));
+const getBlurSecondValues = (min, seg, totalM, totalS) => {
+    let minutes = Number(min);
+    let segundos = Number(seg);
+    let totalSegundos = Number(totalS) + segundos;
+    let totalMinutes = Number(totalM);
+
+    if (segundos > 59) {
+        minutes += 1;
+        segundos = 0;
+    }
+
+    if (totalSegundos > 59) {
+        totalMinutes += 1;
+        totalSegundos = totalSegundos - 60;
+    }
+
+    minutes = getTwoDigitTimeNumber(minutes);
+    segundos = getTwoDigitTimeNumber(segundos);
+    totalMinutes = getTwoDigitTimeNumber(totalMinutes);
+    totalSegundos = getTwoDigitTimeNumber(totalSegundos);
+
+    return {minutes, segundos, totalMinutes, totalSegundos}
 }
 
-// const getTotalSegundosTime = (totalSegundos, segundos) => {
-//     const segTotal = (
-//         Number(state.segundosPrepare) +
-//         Number(state.segundosWork) +
-//         Number(state.segundosRelax) +
-//         Number(state.segundosCoolDown) +
-//         Number(state.segundosCycles)
-//     );
+const getBlurMinutesValues = (min, totalM) => {
+    let totalMinutes = Number(totalM) + Number(min);
 
-//     return ({minTotal, segTotal});
-// }
+    totalMinutes = getTwoDigitTimeNumber(totalMinutes);
+
+    return {totalMinutes}
+}
 
 export default (state = INITIAL_STATE, {type, payload}) => {
-    let segundosValues;
+    let timeValues;
     let addValues;
+    let blurValues;
+    let blurMinutesValues;
 
     switch (type) {
         case MINUTES_PREPARE_CHANGED:
@@ -154,16 +196,18 @@ export default (state = INITIAL_STATE, {type, payload}) => {
                 totalSegundos: addValues.totalSeg,
             };
         case SUBTRACT_SEGUNDOS_PREPARE_CHANGED:
-            segundosValues = getSubtractSegundos(
+            timeValues = getSubtractSegundos(
                 state.segundosPrepare,
                 state.totalSegundos,
                 state.minutesPrepare,
+                state.totalMinutes,
             );
             
             return {...state,
-                minutesPrepare: segundosValues.minutes,
-                segundosPrepare: segundosValues.segundos,
-                totalSegundos: segundosValues.totalSeg
+                minutesPrepare: timeValues.minutes,
+                segundosPrepare: timeValues.segundos,
+                totalSegundos: timeValues.tSegundos,
+                totalMinutes: timeValues.tMinutes,
             };
         case ADD_SEGUNDOS_WORK_CHANGED:
             addValues = getAddSegundos(
@@ -180,11 +224,18 @@ export default (state = INITIAL_STATE, {type, payload}) => {
                 totalSegundos: addValues.totalSeg,
             };
         case SUBTRACT_SEGUNDOS_WORK_CHANGED:
-            segundosValues = getSubtractSegundos(state.segundosWork, state.totalSegundos);
+            timeValues = getSubtractSegundos(
+                state.segundosWork,
+                state.totalSegundos,
+                state.minutesWork,
+                state.totalMinutes,
+            );
         
             return {...state,
-                segundosWork: segundosValues.segundos,
-                totalSegundos: segundosValues.totalSeg,
+                minutesWork: timeValues.minutes,
+                segundosWork: timeValues.segundos,
+                totalSegundos: timeValues.tSegundos,
+                totalMinutes: timeValues.tMinutes,
             };
         case ADD_SEGUNDOS_RELAX_CHANGED:
             addValues = getAddSegundos(
@@ -201,11 +252,18 @@ export default (state = INITIAL_STATE, {type, payload}) => {
                 totalSegundos: addValues.totalSeg,
             };
         case SUBTRACT_SEGUNDOS_RELAX_CHANGED:
-            segundosValues = getSubtractSegundos(state.segundosRelax, state.totalSegundos);
+            timeValues = getSubtractSegundos(
+                state.segundosRelax,
+                state.totalSegundos,
+                state.minutesRelax,
+                state.totalMinutes,
+            );
         
             return {...state,
-                segundosRelax: segundosValues.segundos,
-                totalSegundos: segundosValues.totalSeg,
+                minutesRelax: timeValues.minutes,
+                segundosRelax: timeValues.segundos,
+                totalSegundos: timeValues.tSegundos,
+                totalMinutes: timeValues.tMinutes,
             };
         case ADD_SEGUNDOS_COOL_DOWN_CHANGED:
             addValues = getAddSegundos(
@@ -222,11 +280,18 @@ export default (state = INITIAL_STATE, {type, payload}) => {
                 totalSegundos: addValues.totalSeg,
             };
         case SUBTRACT_SEGUNDOS_COOL_DOWN_CHANGED:
-            segundosValues = getSubtractSegundos(state.segundosCoolDown, state.totalSegundos);
+            timeValues = getSubtractSegundos(
+                state.segundosCoolDown,
+                state.totalSegundos,
+                state.minutesCoolDown,
+                state.totalMinutes,
+            );
         
             return {...state,
-                segundosCoolDown: segundosValues.segundos,
-                totalSegundos: segundosValues.totalSeg,
+                minutesCoolDown: timeValues.minutes,
+                segundosCoolDown: timeValues.segundos,
+                totalSegundos: timeValues.tSegundos,
+                totalMinutes: timeValues.tMinutes,
             };
         case ADD_SEGUNDOS_CYCLES_CHANGED:
             addValues = getAddSegundos(
@@ -243,12 +308,125 @@ export default (state = INITIAL_STATE, {type, payload}) => {
                 totalSegundos: addValues.totalSeg,
             };
         case SUBTRACT_SEGUNDOS_CYCLES_CHANGED:
-            segundosValues = getSubtractSegundos(state.segundosCycles, state.totalSegundos);
+            timeValues = getSubtractSegundos(
+                state.segundosCycles,
+                state.totalSegundos,
+                state.minutesCycles,
+                state.totalMinutes,
+            );
         
             return {...state,
-                segundosCycles: segundosValues.segundos,
-                totalSegundos: segundosValues.totalSeg,
+                minutesCycles: timeValues.minutes,
+                segundosCycles: timeValues.segundos,
+                totalSegundos: timeValues.tSegundos,
+                totalMinutes: timeValues.tMinutes,
             };
+        case ON_BLUR_SEGUNDOS_PREPARE_CHANGED:
+            blurValues = getBlurSecondValues(
+                state.minutesPrepare,
+                state.segundosPrepare,
+                state.totalMinutes,
+                state.totalSegundos,
+            );
+
+            return {...state,
+                minutesPrepare: blurValues.minutes,
+                segundosPrepare: blurValues.segundos,
+                totalMinutes: blurValues.totalMinutes,
+                totalSegundos: blurValues.totalSegundos,
+            }
+        case ON_BLUR_SEGUNDOS_WORK_CHANGED:
+            blurValues = getBlurSecondValues(
+                state.minutesWork,
+                state.segundosWork,
+                state.totalMinutes,
+                state.totalSegundos,
+            );
+
+            return {...state,
+                minutesWork: blurValues.minutes,
+                segundosWork: blurValues.segundos,
+                totalMinutes: blurValues.totalMinutes,
+                totalSegundos: blurValues.totalSegundos,
+            }
+        case ON_BLUR_SEGUNDOS_RELAX_CHANGED:
+            blurValues = getBlurSecondValues(
+                state.minutesRelax,
+                state.segundosRelax,
+                state.totalMinutes,
+                state.totalSegundos,
+            );
+
+            return {...state,
+                minutesRelax: blurValues.minutes,
+                segundosRelax: blurValues.segundos,
+                totalMinutes: blurValues.totalMinutes,
+                totalSegundos: blurValues.totalSegundos,
+            }
+        case ON_BLUR_SEGUNDOS_COOL_DOWN_CHANGED:
+            blurValues = getBlurSecondValues(
+                state.minutesCoolDown,
+                state.segundosCoolDown,
+                state.totalMinutes,
+                state.totalSegundos,
+            );
+
+            return {...state,
+                minutesCoolDown: blurValues.minutes,
+                segundosCoolDown: blurValues.segundos,
+                totalMinutes: blurValues.totalMinutes,
+                totalSegundos: blurValues.totalSegundos,
+            }
+        case ON_BLUR_SEGUNDOS_CYCLES_CHANGED:
+            blurValues = getBlurSecondValues(
+                state.minutesCycles,
+                state.segundosCycles,
+                state.totalMinutes,
+                state.totalSegundos,
+            );
+
+            return {...state,
+                minutesCycles: blurValues.minutes,
+                segundosCycles: blurValues.segundos,
+                totalMinutes: blurValues.totalMinutes,
+                totalSegundos: blurValues.totalSegundos,
+            }
+        
+        case ON_BLUR_MINUTES_PREPARE_CHANGED:
+            blurMinutesValues = getBlurMinutesValues(
+                state.minutesPrepare,
+                state.totalMinutes,
+            );
+
+            return {...state, totalMinutes: blurMinutesValues.totalMinutes}
+        case ON_BLUR_MINUTES_WORK_CHANGED:
+            blurMinutesValues = getBlurMinutesValues(
+                state.minutesWork,
+                state.totalMinutes,
+            );
+
+            return {...state, totalMinutes: blurMinutesValues.totalMinutes}
+        case ON_BLUR_MINUTES_RELAX_CHANGED:
+            blurMinutesValues = getBlurMinutesValues(
+                state.minutesRelax,
+                state.totalMinutes,
+            );
+
+            return {...state, totalMinutes: blurMinutesValues.totalMinutes}
+        case ON_BLUR_MINUTES_COOL_DOWN_CHANGED:
+            blurMinutesValues = getBlurMinutesValues(
+                state.minutesCoolDown,
+                state.totalMinutes,
+            );
+
+            return {...state, totalMinutes: blurMinutesValues.totalMinutes}
+        case ON_BLUR_MINUTES_CYCLES_CHANGED:
+            blurMinutesValues = getBlurMinutesValues(
+                state.minutesCycles,
+                state.totalMinutes,
+            );
+
+            return {...state, totalMinutes: blurMinutesValues.totalMinutes}
         default:
             return state;
     }

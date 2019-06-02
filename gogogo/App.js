@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -30,15 +30,18 @@ export default class App extends PureComponent {
     }
 
     render() {
-        const {showHome} = this.state;
+        StatusBar.setBarStyle('light-content', true);
 
+        const {showHome} = this.state;
+        
         let enterScreen = (
             <Image
                 style={styles.image}
                 source={require('./src/image/go1_2x.png')}
             />
         );
-
+        
+        
         if (showHome) {
             enterScreen = <HomeScreen />;
         }
