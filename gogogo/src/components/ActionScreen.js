@@ -159,7 +159,7 @@ const styles = {
         marginTop: -319,
     },
     processCoolDown: {
-        marginLeft: 1,
+        marginLeft: 0,
         marginTop: -318,
     },
     processCycles: {
@@ -172,7 +172,7 @@ const styles = {
     },
     outLine: {
         marginLeft: 25,
-        marginTop: -285,
+        marginTop: -284,
     },
     homeContent: {
         color: '#ffffff',
