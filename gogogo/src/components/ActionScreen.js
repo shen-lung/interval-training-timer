@@ -50,6 +50,7 @@ export default class ActionScreen extends PureComponent {
     
     render() {
         // const {progressNumber} = this.state.progressNumber;
+        // #FF073A #0093FF #DFE800 #FD5F00
 
         return (
             <View style={styles.homeScreen}>
@@ -58,12 +59,12 @@ export default class ActionScreen extends PureComponent {
                         <AnimatedCircularProgress
                             size={320}
                             width={46}
-                            backgroundWidth={40}
+                            backgroundWidth={46}
                             fill={100}
-                            rotation={-36}
-                            duration={1000}
-                            arcSweepAngle={72}
-                            tintColor='#FF073A'
+                            rotation={-45}
+                            duration={0}
+                            arcSweepAngle={90}
+                            tintColor='#404040'
                             onAnimationComplete={() => console.log('onAnimationComplete')}
                             backgroundColor='#404040'
                         />
@@ -72,12 +73,12 @@ export default class ActionScreen extends PureComponent {
                         <AnimatedCircularProgress
                             size={320}
                             width={46}
-                            backgroundWidth={40}
+                            backgroundWidth={46}
                             fill={100}
-                            rotation={36}
+                            rotation={45}
                             duration={1000}
-                            arcSweepAngle={72}
-                            tintColor='#0093FF'
+                            arcSweepAngle={90}
+                            tintColor='#404040'
                             onAnimationComplete={() => console.log('onAnimationComplete')}
                             backgroundColor='#404040'
                         />
@@ -86,26 +87,12 @@ export default class ActionScreen extends PureComponent {
                         <AnimatedCircularProgress
                             size={320}
                             width={46}
-                            backgroundWidth={40}
+                            backgroundWidth={46}
                             fill={100}
-                            rotation={108}
+                            rotation={135}
                             duration={1000}
-                            arcSweepAngle={72}
+                            arcSweepAngle={90}
                             tintColor='#DFE800'
-                            onAnimationComplete={() => console.log('onAnimationComplete')}
-                            backgroundColor='#404040'
-                        />
-                    </View>
-                    <View style={styles.processCycles}>
-                        <AnimatedCircularProgress
-                            size={320}
-                            width={46}
-                            backgroundWidth={40}
-                            fill={100}
-                            rotation={180}
-                            duration={1000}
-                            arcSweepAngle={72}
-                            tintColor='#0CE81D'
                             onAnimationComplete={() => console.log('onAnimationComplete')}
                             backgroundColor='#404040'
                         />
@@ -114,16 +101,44 @@ export default class ActionScreen extends PureComponent {
                         <AnimatedCircularProgress
                             size={320}
                             width={46}
+                            backgroundWidth={46}
                             fill={100}
-                            rotation={252}
-                            duration={1000}
-                            arcSweepAngle={72}
-                            tintColor='#FD5F00'
+                            rotation={225}
+                            duration={0}
+                            arcSweepAngle={90}
+                            tintColor='#404040'
                             onAnimationComplete={() => console.log('onAnimationComplete')}
                             backgroundColor='#404040'
                         />
                     </View>
                 </View>
+                    <View style={styles.processCycles}>
+                        <AnimatedCircularProgress
+                            size={246}
+                            width={8}
+                            backgroundWidth={0}
+                            fill={100}
+                            rotation={0}
+                            duration={0}
+                            arcSweepAngle={360}
+                            tintColor='#DFE800'
+                            onAnimationComplete={() => console.log('onAnimationComplete')}
+                        />
+                    </View>
+                    <View style={styles.outLine}>
+                        <AnimatedCircularProgress
+                            size={323}
+                            width={1}
+                            backgroundWidth={1}
+                            fill={100}
+                            rotation={0}
+                            duration={0}
+                            arcSweepAngle={360}
+                            tintColor='#676767'
+                            onAnimationComplete={() => console.log('onAnimationComplete')}
+                            backgroundColor='#404040'
+                        />
+                    </View>
             </View>
         );
     }
@@ -144,16 +159,20 @@ const styles = {
         marginTop: -319,
     },
     processCoolDown: {
-        marginLeft: 2,
+        marginLeft: 1,
         marginTop: -318,
     },
     processCycles: {
-        marginLeft: -1,
-        marginTop: -320,
+        marginLeft: 64,
+        marginTop: -392,
     },
     processPrepare: {
         marginLeft: -3,
         marginTop: -322,
+    },
+    outLine: {
+        marginLeft: 25,
+        marginTop: -285,
     },
     homeContent: {
         color: '#ffffff',

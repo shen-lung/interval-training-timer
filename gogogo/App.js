@@ -43,7 +43,7 @@ export default class App extends PureComponent {
         
         
         if (showHome) {
-            enterScreen = <HomeScreen />;
+            enterScreen = <ActionScreen />;
         }
         
         return (
