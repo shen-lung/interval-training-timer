@@ -1,8 +1,15 @@
 import React, {PureComponent} from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import {
+    Text,
+    View,
+    TextInput,
+    TouchableOpacity,
+    Platform,
+} from 'react-native';
 
 import {titleColorCode} from './constants';
+
+const isIos = Platform.OS === 'ios';
 
 export default class ModeSection extends PureComponent {
     render() {
@@ -28,7 +35,7 @@ export default class ModeSection extends PureComponent {
                     <View style={styles.time}>
                         <View style={styles.timePosition}>
                             <Text style={[styles.titleText, {color: titleColorCodeNumber}]}>{titleText}</Text>
-                            <View style={{flexDirection: 'row',}}>
+                            <View style={[styles.timeSection ,{flexDirection: 'row'}]}>
                                 <TextInput
                                     style={[styles.timeText, {color: timeColor}]}
                                     keyboardType='numeric'
@@ -112,8 +119,14 @@ const styles = {
     timeText: {
         fontSize: 28,
     },
+    timeSection: {
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     textDevider: {
         fontSize: 28,
+        paddingBottom: isIos ? 0 : 5,
     },
     titleText: {
         fontSize: 16,

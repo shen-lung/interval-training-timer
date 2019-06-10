@@ -1,5 +1,12 @@
 import React, {PureComponent} from 'react';
-import {Text, View, Image, TouchableHighlight} from 'react-native';
+import {
+    Text,
+    View,
+    Image,
+    TouchableHighlight,
+    TouchableOpacity,
+    Platform,
+} from 'react-native';
 import {connect} from 'react-redux';
 
 import ModeSection from './ModeSection';
@@ -45,6 +52,8 @@ import {
     onBlurMinutesCoolDown,
     onBlurMinutesCycles,
 } from '../actions';
+
+const isIos = Platform.OS === 'ios';
 
 class HomeScreen extends PureComponent {
     onBlurMinutesPrepareChanged(minutes) {
@@ -254,11 +263,13 @@ class HomeScreen extends PureComponent {
                         />
                     </View>
                 </View>
-                <View style={styles.goButtonSection}>
-                    <View style={styles.goButton}>
-                        <Text style={styles.goButtonText}>GO</Text>
+                    <View style={styles.goButtonSection}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Action')}>
+                            <View style={styles.goButton}>
+                                <Text style={styles.goButtonText}>GO</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                </View>
                 <View style={styles.footerSection}>
                     <TouchableHighlight onPress={this.onPress}>
                         <View style={styles.iconSection}>
@@ -342,7 +353,7 @@ const styles = {
         justifyContent: 'space-between',
     },
     modeSection: {
-        marginTop: 80,
+        marginTop: isIos ? 80 : 20,
     },
     total: {
         marginTop: 10,
