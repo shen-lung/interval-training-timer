@@ -1,9 +1,12 @@
+// react-native link react-native-gesture-handler
+
 import React, {PureComponent} from 'react';
 import {View, Image, StatusBar, Dimensions} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
-import {createSwitchNavigator, createAppContainer} from 'react-navigation';
+import {createSwitchNavigator, createAppContainer, createStackNavigator} from 'react-navigation';
+import { fromLeft } from 'react-navigation-transitions';
 
 import reducers from './src/reducers';
 
@@ -57,11 +60,22 @@ export default class App extends PureComponent {
     }
 }
 
-const AppSwitchNavigator = createSwitchNavigator({
-    // Home: {screen: HomeScreen},
-    Home: {screen: HomeScreen},
-    Action: {screen: ActionScreen},
-});
+const AppSwitchNavigator = createStackNavigator(
+    {
+        // Home: {screen: HomeScreen},
+        Home: {screen: HomeScreen},
+        Action: {screen: ActionScreen},
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+        cardStyle: {
+            backgroundColor: 'transparent',
+            opacity: 1,
+        },
+        transitionConfig: () => fromLeft(500),
+    },
+);
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
 
